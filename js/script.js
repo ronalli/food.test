@@ -4,6 +4,9 @@ window.addEventListener('DOMContentLoaded', () => {
 	const tabsContent = document.querySelectorAll('.tabcontent');
 	const tabs = document.querySelectorAll('.tabheader__item');
 	const tabsParent = document.querySelector('.tabheader__items');
+	const btnsModal = document.querySelectorAll('[data-modal]'),
+		modalWindow = document.querySelector('.modal');
+
 
 	function hideTabContent() {
 		tabsContent.forEach(item => {
@@ -87,5 +90,17 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 
 	setClock('.timer', deadLine);
+
+	//Modal Window
+
+	btnsModal.forEach(btn => {
+		btn.addEventListener('click', () => {
+			modalWindow.style.display = 'block';
+		});
+	});
+
+	document.querySelector('[data-close]').addEventListener('click', () => {
+		modalWindow.style.display = 'none';
+	});
 
 });
