@@ -10,7 +10,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	function hideTabContent() {
 		tabsContent.forEach(item => {
-			item.style.display = 'none';
+			// item.style.display = 'none';
+			item.classList.add('hide');
+			item.classList.remove('show');
 		});
 
 		tabs.forEach(item => {
@@ -20,7 +22,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	function showTabContent(index = 0) {
 		tabs[index].classList.add('tabheader__item_active');
-		tabsContent[index].style.display = 'block';
+		// tabsContent[index].style.display = 'block';
+		tabsContent[index].classList.add('show');
 	}
 
 	tabsParent.addEventListener('click', (e) => {
@@ -93,14 +96,47 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	//Modal Window
 
+	function closeModal() {
+		modalWindow.classList.toggle('show');
+		document.body.style.overflow = '';
+	}
+
+	function openModal() {
+		modalWindow.classList.toggle('show');
+		document.body.style.overflow = 'hidden';
+	}
+
+	const setTimeoutModal = setTimeout(openModal, 3000);
+
 	btnsModal.forEach(btn => {
 		btn.addEventListener('click', () => {
-			modalWindow.style.display = 'block';
+			openModal();
+			clearTimeout(setTimeoutModal);
 		});
 	});
 
-	document.querySelector('[data-close]').addEventListener('click', () => {
-		modalWindow.style.display = 'none';
+	document.querySelector('[data-close]').addEventListener('click', closeModal);
+
+	modalWindow.addEventListener('click', (e) => {
+		if (e.target === modalWindow) {
+			closeModal();
+		}
 	});
+
+	document.addEventListener('keydown', (e) => {
+		if (e.code === 'Escape' && modalWindow.classList.contains('show')) {
+			closeModal();
+		}
+	});
+
+	function showModalByScroll() {
+		console.log(window.scrollY, document.documentElement.clientHeight, document.documentElement.scrollHeight);
+		if (Math.ceil(window.scrollY + document.documentElement.clientHeight) >= document.documentElement.scrollHeight) {
+			openModal();
+			window.removeEventListener('scroll', showModalByScroll);
+		}
+	}
+
+	window.addEventListener('scroll', showModalByScroll);
 
 });
