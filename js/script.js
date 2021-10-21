@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	//Timer
 
-	const deadLine = '2021-10-26';
+	const deadLine = '2021-10-24';
 
 	function getTimeRemaining(endtime) {
 		const t = Date.parse(endtime) - Date.parse(new Date());
@@ -53,7 +53,11 @@ window.addEventListener('DOMContentLoaded', () => {
 			seconds
 		};
 	}
-	
+
+	function getZero(num) {
+		return (num >= 0 && num < 10) ? `0${num}` : num;
+	}
+
 	function setClock(selector, endtime) {
 		const timer = document.querySelector(selector);
 		const days = timer.querySelector('#days'),
@@ -67,16 +71,18 @@ window.addEventListener('DOMContentLoaded', () => {
 		function updateClock() {
 			const time = getTimeRemaining(endtime);
 
-			days.innerHTML = time.days < 10 ? `0${time.days}` : time.days;
-			hours.innerHTML = time.hours < 10 ? `0${time.hours}` : time.hours;
-			minutes.innerHTML = time.minutes;
-			seconds.innerHTML = time.seconds;
+			days.innerHTML = getZero(time.days);
+			hours.innerHTML = getZero(time.hours);
+			minutes.innerHTML = getZero(time.minutes);
+			seconds.innerHTML = getZero(time.seconds);
 
 			if (time.t <= 0) {
 				clearInterval(timeInterval);
+				days.innerHTML = '00';
+				hours.innerHTML = '00';
+				minutes.innerHTML = '00';
+				seconds.innerHTML = '00';
 			}
-
-
 		}
 	}
 
