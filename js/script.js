@@ -233,8 +233,15 @@ window.addEventListener('DOMContentLoaded', () => {
 			e.preventDefault();
 			const request = new XMLHttpRequest();
 			request.open('POST', 'server.php');
+			request.setRequestHeader('Content-type', 'aplication/json');
 			const formData = new FormData(form);
-			request.send(formData);
+
+			const obj = {};
+			formData.forEach((value, key) => {
+				obj[key] = value;
+			});
+
+			request.send(JSON.stringify(obj));
 
 			request.addEventListener('load', () => {
 				if (request.status === 200) {
@@ -243,7 +250,7 @@ window.addEventListener('DOMContentLoaded', () => {
 					setTimeout(() => {
 						statusMessage.textContent = '';
 					}, 2000);
-					// console.log(request.response);
+					console.log(request.response);
 				} else {
 					statusMessage.textContent = message.error;
 				}
