@@ -218,7 +218,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	//Form
 
 	const message = {
-		loading: 'Загрузка...',
+		loading: 'img/form/spinner.svg',
 		success: 'Спасибо. Наш сотрудник скоро с Вами свяжется.',
 		error: 'Произошла ошибка. Попробуйте позже.'
 	};
@@ -231,33 +231,39 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	function postData(form) {
 		form.addEventListener('submit', (e) => {
-			const statusMessage = document.createElement('div');
-			statusMessage.classList.add('status');
-			statusMessage.textContent = message.loading;
-			form.append(statusMessage);
+			const statusMessage = document.createElement('img');
+			statusMessage.src = message.loading;
+			statusMessage.style.cssText = `
+				display: block;
+				margin: 0 auto;
+			`;
+			form.insertAdjacentElement('afterend', statusMessage);
 			e.preventDefault();
-			const request = new XMLHttpRequest();
-			request.open('POST', 'server.php');
-			request.setRequestHeader('Content-type', 'aplication/json');
-			const formData = new FormData(form);
 
-			const obj = {};
-			formData.forEach((value, key) => {
-				obj[key] = value;
-			});
 
-			request.send(JSON.stringify(obj));
+			
+			// const request = new XMLHttpRequest();
+			// request.open('POST', 'server.php');
+			// request.setRequestHeader('Content-type', 'aplication/json');
+			// const formData = new FormData(form);
 
-			request.addEventListener('load', () => {
-				if (request.status === 200) {
-					showThanksModal(message.success);
-					statusMessage.remove();
-					form.reset();
-					// console.log(request.response);
-				} else {
-					statusMessage.textContent = message.error;
-				}
-			});
+			// const obj = {};
+			// formData.forEach((value, key) => {
+			// 	obj[key] = value;
+			// });
+
+			// request.send(JSON.stringify(obj));
+
+			// request.addEventListener('load', () => {
+			// 	if (request.status === 200) {
+			// 		showThanksModal(message.success);
+			// 		statusMessage.remove();
+			// 		form.reset();
+			// 		// console.log(request.response);
+			// 	} else {
+			// 		statusMessage.textContent = message.error;
+			// 	}
+			// });
 		});
 	}
 
