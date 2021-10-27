@@ -182,8 +182,10 @@ window.addEventListener('DOMContentLoaded', () => {
 			`;
 			this.parent.append(element);
 		}
-
 	}
+
+
+
 
 	new MenuCard(
 		'Меню "Фитнес"',
@@ -226,10 +228,22 @@ window.addEventListener('DOMContentLoaded', () => {
 	const forms = document.querySelectorAll('form');
 
 	forms.forEach(item => {
-		postData(item);
+		bindPostData(item);
 	});
 
-	function postData(form) {
+	const postData = async (url, data) => {
+		let res = await fetch(url, {
+			method: "POST",
+			headers: {
+
+				"Content-Type": "application/json"
+			},
+			body: data
+		});
+		return await res.json();
+	};
+
+	function bindPostData(form) {
 		form.addEventListener('submit', (e) => {
 			const statusMessage = document.createElement('img');
 			statusMessage.src = message.loading;
@@ -241,21 +255,11 @@ window.addEventListener('DOMContentLoaded', () => {
 			e.preventDefault();
 
 			const formData = new FormData(form);
-			const obj = {};
-			formData.forEach((value, key) => {
-				obj[key] = value;
-			});
+			const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
-			fetch('server.php', {
-				method: "POST",
-				headers: {
-					"Content-type": "aplication/json"
-				},
-				body: JSON.stringify(obj)
-			})
-				.then(data => (data.text()))
+			postData('http://localhost:3000/requests', json)
 				.then((data) => {
-					// console.log(data);
+					console.log(data);
 					showThanksModal(message.success);
 				})
 				.catch(() => {
