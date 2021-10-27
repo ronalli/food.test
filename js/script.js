@@ -284,6 +284,43 @@ window.addEventListener('DOMContentLoaded', () => {
 			prevModalDialog.classList.remove('hide');
 			closeModal();
 		}, 4000);
-
 	}
+
+
+	//Slider
+
+	const sliders = document.querySelector('.offer__slider-wrapper');
+	let currentIndexSlider = 1;
+	const currentSlider = document.querySelector('#current');
+	const sliderPrev = document.querySelector('.offer__slider-prev');
+	const sliderNext = document.querySelector('.offer__slider-next');
+
+	function runSlider(sliders) {
+		const arr = [...sliders.children];
+		arr.forEach(item => {
+			item.classList.add('hide');
+		});
+		arr[currentIndexSlider - 1].classList.remove('hide');
+		currentSlider.textContent = currentIndexSlider < 10 ? `0${currentIndexSlider}` : `${currentIndexSlider}`;
+	}
+
+	sliderNext.addEventListener('click', () => {
+		currentIndexSlider++;
+		if (currentIndexSlider === 5) {
+			currentIndexSlider = 1;
+		}
+		runSlider(sliders);
+	});
+
+	sliderPrev.addEventListener('click', () => {
+		currentIndexSlider--;
+		if (currentIndexSlider === 0) {
+			currentIndexSlider = 4;
+		}
+		runSlider(sliders);
+	});
+
+
+	runSlider(sliders);
+
 });
