@@ -154,7 +154,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			this.alt = alt;
 			this.parent = document.querySelector(parentSelector);
 			this.classes = classes;
-			this.transfer = 26.45;
+			this.transfer = 26.70;
 			this.changeToUAH();
 		}
 
@@ -184,38 +184,43 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
+	getResource('http://localhost:3000/menu')
+		.then((data) => {
+			data.forEach(({ img, imgalt, title, descr, price }) => {
+				new MenuCard(title, descr, price, img, imgalt, ".menu .container").render();
+			});
+		});
 
 
+	// new MenuCard(
+	// 	'Меню "Фитнес"',
+	// 	'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов.Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+	// 	11,
+	// 	"img/tabs/vegy.jpg",
+	// 	"Меню Фитнес",
+	// 	".menu .container",
+	// 	'menu__item'
+	// ).render();
 
-	new MenuCard(
-		'Меню "Фитнес"',
-		'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов.Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
-		11,
-		"img/tabs/vegy.jpg",
-		"Меню Фитнес",
-		".menu .container",
-		'menu__item'
-	).render();
+	// new MenuCard(
+	// 	'Меню "Премиум"',
+	// 	'В меню "Премиум" мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
+	// 	16,
+	// 	"img/tabs/elite.jpg",
+	// 	"Меню Премиум",
+	// 	".menu .container",
+	// 	'menu__item'
+	// ).render();
 
-	new MenuCard(
-		'Меню "Премиум"',
-		'В меню "Премиум" мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
-		16,
-		"img/tabs/elite.jpg",
-		"Меню Премиум",
-		".menu .container",
-		'menu__item'
-	).render();
-
-	new MenuCard(
-		'Меню "Постное"',
-		'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
-		21,
-		"img/tabs/post.jpg",
-		"Меню Постное",
-		".menu .container",
-		'menu__item'
-	).render();
+	// new MenuCard(
+	// 	'Меню "Постное"',
+	// 	'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
+	// 	21,
+	// 	"img/tabs/post.jpg",
+	// 	"Меню Постное",
+	// 	".menu .container",
+	// 	'menu__item'
+	// ).render();
 
 	//Form
 
@@ -242,6 +247,15 @@ window.addEventListener('DOMContentLoaded', () => {
 		});
 		return await res.json();
 	};
+
+
+	async function getResource(url) {
+		let res = await fetch(url);
+		if (!res.ok) {
+			throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+		}
+		return await res.json();
+	}
 
 	function bindPostData(form) {
 		form.addEventListener('submit', (e) => {
