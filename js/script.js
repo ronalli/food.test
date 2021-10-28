@@ -289,38 +289,38 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	//Slider
 
-	const sliders = document.querySelector('.offer__slider-wrapper');
+	const slides = document.querySelectorAll('.offer__slide');
 	let currentIndexSlider = 1;
-	const currentSlider = document.querySelector('#current');
+	const current = document.querySelector('#current');
+	const total = document.querySelector('#total');
 	const sliderPrev = document.querySelector('.offer__slider-prev');
 	const sliderNext = document.querySelector('.offer__slider-next');
 
+	runSlider(slides);
+
 	function runSlider(sliders) {
-		const arr = [...sliders.children];
-		arr.forEach(item => {
+		sliders.forEach(item => {
 			item.classList.add('hide');
 		});
-		arr[currentIndexSlider - 1].classList.remove('hide');
-		currentSlider.textContent = currentIndexSlider < 10 ? `0${currentIndexSlider}` : `${currentIndexSlider}`;
+		sliders[currentIndexSlider - 1].classList.remove('hide');
+		current.textContent = currentIndexSlider < 10 ? `0${currentIndexSlider}` : currentIndexSlider;
+		total.textContent = slides.length < 10 ? `0${slides.length}` : slides.length;
 	}
 
 	sliderNext.addEventListener('click', () => {
 		currentIndexSlider++;
-		if (currentIndexSlider === 5) {
+		if (currentIndexSlider > slides.length) {
 			currentIndexSlider = 1;
 		}
-		runSlider(sliders);
+		runSlider(slides);
 	});
 
 	sliderPrev.addEventListener('click', () => {
 		currentIndexSlider--;
-		if (currentIndexSlider === 0) {
+		if (currentIndexSlider < 1) {
 			currentIndexSlider = 4;
 		}
-		runSlider(sliders);
+		runSlider(slides);
 	});
-
-
-	runSlider(sliders);
 
 });
