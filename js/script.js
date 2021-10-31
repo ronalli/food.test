@@ -319,13 +319,17 @@ window.addEventListener('DOMContentLoaded', () => {
 		total.textContent = totalLength < 10 ? `0${totalLength}` : totalLength;
 	}
 
+	function numberWithWidth(number) {
+		return +number.replace(/\D/g, '');
+	}
+
+
 	sliderNext.addEventListener('click', () => {
-		if (offset == (+widthSlide.slice(0, widthSlide.length - 2) * (slides.length - 1))) {
+		if (offset == numberWithWidth(widthSlide) * (slides.length - 1)) {
 			offset = 0;
 		} else {
-			offset += +widthSlide.slice(0, widthSlide.length - 2);
+			offset += numberWithWidth(widthSlide);
 		}
-
 		if (currentIndexSlider == slides.length) {
 			currentIndexSlider = 1;
 		} else {
@@ -338,13 +342,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 	sliderPrev.addEventListener('click', () => {
-		console.log(offset);
 		if (offset === 0) {
-			offset = +widthSlide.slice(0, widthSlide.length - 2) * (slides.length - 1);
+			offset = numberWithWidth(widthSlide) * (slides.length - 1);
 		} else {
-			offset -= +widthSlide.slice(0, widthSlide.length - 2);
+			offset -= numberWithWidth(widthSlide);
 		}
-
 		if (currentIndexSlider === 1) {
 			currentIndexSlider = slides.length;
 		} else {
@@ -397,14 +399,12 @@ window.addEventListener('DOMContentLoaded', () => {
 		massDots[currentIndexSlider - 1].style.opacity = '1';
 	});
 
-
-	console.log(massDots);
-
 	massDots.forEach(dot => {
 		dot.addEventListener('click', () => {
 			const index = dot.getAttribute('data-slide-to');
-			offset = (+widthSlide.slice(0, widthSlide.length - 2) * (index - 1));
+			offset = (+widthSlide.replace(/\D/g, '') * (index - 1));
 			sliderInner.style.transform = `translateX(-${offset}px)`;
+			currentIndexSlider = index;
 			indexCheck(index);
 			setStyleOpacity(massDots, index);
 		});
