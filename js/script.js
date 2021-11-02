@@ -410,10 +410,82 @@ window.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 
-
 	function setStyleOpacity(arr, index) {
 		arr.forEach(item => item.style.opacity = '0.5');
 		arr[index - 1].style.opacity = '1';
 	}
 
+	//Calculator
+
+	const result = document.querySelector('.calculating__result span');
+	let sex = 'female', height, weight, age, ratio = 1.375;
+
+	function calcTotal() {
+		if (!sex || !height || !weight || !age || !ratio) {
+			result.textContent = '____';
+			return;
+		}
+
+		if (sex === 'female') {
+			result.textContent = Math.round((447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * ratio);
+		} else {
+			result.textContent = Math.round((88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * ratio);
+		}
+	}
+
+	calcTotal();
+
+	function getStaticInformation(parentSelector, classActive) {
+		const elements = document.querySelectorAll(`${parentSelector} div`);
+
+		elements.forEach(element => {
+
+			element.addEventListener('click', (e) => {
+				if (e.target.getAttribute('data-ratio')) {
+					ratio = +e.target.getAttribute('data-ratio');
+				} else {
+					sex = e.target.getAttribute('id');
+				}
+				// console.log(ratio, sex);
+				elements.forEach(element => {
+					element.classList.remove(classActive);
+				});
+				e.target.classList.add(classActive);
+				calcTotal();
+			});
+
+		});
+	}
+
+	getStaticInformation('#gender', 'calculating__choose-item_active');
+	getStaticInformation('.calculating__choose_big', 'calculating__choose-item_active');
+
+	function getDynamicInformation(selector) {
+		const inputs = document.querySelectorAll(selector);
+		inputs.forEach(input => {
+			input.addEventListener('input', (e) => {
+				switch (e.target.getAttribute('id')) {
+					case 'height':
+						height = +e.target.value;
+						console.log(e.target.value);
+						break;
+					case 'weight':
+						weight = +e.target.value;
+						console.log(e.target.value);
+						break;
+					case 'age':
+						age = +e.target.value;
+						console.log(e.target.value);
+						break;
+				}
+				calcTotal();
+			});
+		});
+	}
+
+	getDynamicInformation('.calculating__choose_medium');
+
+
+
 });
+
