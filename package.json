@@ -5,6 +5,7 @@
   "main": "index.js",
   "devDependencies": {
     "json-server": "^0.17.0",
+    "webpack": "^5.61.0",
     "webpack-cli": "^4.9.1"
   },
   "scripts": {
@@ -14,7 +15,6 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",
-    "jshint": "^2.13.1",
-    "webpack": "^5.61.0"
+    "jshint": "^2.13.1"
   }
 }
