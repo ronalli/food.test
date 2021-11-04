@@ -1,9 +1,9 @@
 import { openModal, closeModal } from './modal';
+import {postData} from '../services/services';
 
 
 
-
-function form(setTimeoutModal) {
+function forms(formsSelector, setTimeoutModal) {
 
 	const message = {
 		loading: 'img/form/spinner.svg',
@@ -11,22 +11,22 @@ function form(setTimeoutModal) {
 		error: 'Произошла ошибка. Попробуйте позже.'
 	};
 
-	const forms = document.querySelectorAll('form');
+	const forms = document.querySelectorAll(formsSelector);
 
 	forms.forEach(item => {
 		bindPostData(item);
 	});
 
-	const postData = async (url, data) => {
-		let res = await fetch(url, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: data
-		});
-		return await res.json();
-	};
+	// const postData = async (url, data) => {
+	// 	let res = await fetch(url, {
+	// 		method: "POST",
+	// 		headers: {
+	// 			"Content-Type": "application/json"
+	// 		},
+	// 		body: data
+	// 	});
+	// 	return await res.json();
+	// };
 
 
 	// async function getResource(url) {
@@ -92,4 +92,4 @@ function form(setTimeoutModal) {
 	}
 }
 
-export default form;
+export default forms;
