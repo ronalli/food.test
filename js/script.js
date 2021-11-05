@@ -1,3 +1,6 @@
+require('es6-promise').polyfill();
+import 'nodelist-foreach-polyfill';
+
 import tabs from './modules/tabs';
 import timer from './modules/timer';
 import modal from './modules/modal';
@@ -6,8 +9,6 @@ import forms from './modules/forms';
 import slider from './modules/slider';
 import calc from './modules/calc';
 import { openModal } from './modules/modal';
-
-
 
 window.addEventListener('DOMContentLoaded', () => {
 
